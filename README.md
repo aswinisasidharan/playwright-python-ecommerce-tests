@@ -1,3 +1,5 @@
+![Playwright Tests](https://github.com/aswinisasidharan/playwright-python-ecommerce-tests/actions/workflows/playwright.yml/badge.svg)
+
 # Playwright Python E-commerce Tests
 
 Automation test framework built with Playwright and Python using pytest.
