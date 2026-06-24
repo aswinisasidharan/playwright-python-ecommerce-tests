@@ -3,4 +3,5 @@ __pycache__/
 test-results/
 playwright-report/
 *.pyc
-.venv
+/venv
+CLAUDE.md
