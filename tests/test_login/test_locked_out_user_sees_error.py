@@ -3,8 +3,8 @@ from playwright.sync_api import Page, expect
 from pages.login_page import LoginPage
 
 
-def test_locked_out_user_sees_error(page: Page):
-    login_page = LoginPage(page)
+def test_locked_out_user_sees_error(page: Page, base_url: str):
+    login_page = LoginPage(page, base_url)
     login_page.goto()
     login_page.login("locked_out_user", "secret_sauce")
 

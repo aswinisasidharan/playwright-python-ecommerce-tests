@@ -4,8 +4,8 @@ from playwright.sync_api import Page, expect
 from pages.login_page import LoginPage
 
 
-def test_valid_user_can_log_in(page: Page):
-    login_page = LoginPage(page)
+def test_valid_user_can_log_in(page: Page, base_url:str):
+    login_page = LoginPage(page, base_url)
     login_page.goto()
     login_page.login("standard_user", "secret_sauce")
 

@@ -5,9 +5,9 @@ from pages.cart_page import CartPage
 from pages.checkout_page import CheckoutPage
 
 
-def test_complete_checkout_flow(page: Page):
+def test_complete_checkout_flow(page: Page, base_url: str):
     """User can complete the full checkout flow end to end."""
-    login_page = LoginPage(page)
+    login_page = LoginPage(page, base_url)
     cart_page = CartPage(page)
     checkout_page = CheckoutPage(page)
 

@@ -9,8 +9,9 @@ class LoginPage:
 
     URL = "https://www.saucedemo.com/"
 
-    def __init__(self, page: Page):
+    def __init__(self, page: Page, base_url: str):
         self.page = page
+        self.base_url = base_url
         # Define locators once — if the site changes, fix it here only
         self.username_input = page.get_by_placeholder("Username")
         self.password_input = page.get_by_placeholder("Password")

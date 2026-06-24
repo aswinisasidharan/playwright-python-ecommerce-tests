@@ -5,9 +5,9 @@ from pages.cart_page import CartPage
 from pages.checkout_page import CheckoutPage
 
 
-def test_checkout_requires_user_details(page: Page):
+def test_checkout_requires_user_details(page: Page, base_url: str):
     """Checkout cannot proceed without filling in user details."""
-    login_page = LoginPage(page)
+    login_page = LoginPage(page, base_url)
     cart_page = CartPage(page)
     checkout_page = CheckoutPage(page)
 
