@@ -1,20 +1,20 @@
-import re
 import pytest
 from playwright.sync_api import Page, expect
+from pages.login_page import LoginPage
+from pages.cart_page import CartPage
 
 
-def test_remove_item_from_cart_page(page: Page):
-    """Item can be removed from the cart page."""
-    page.goto("https://www.saucedemo.com/")
-    page.get_by_placeholder("Username").fill("standard_user")
-    page.get_by_placeholder("Password").fill("secret_sauce")
-    page.get_by_role("button", name="Login").click()
- 
-    page.locator("[data-test='add-to-cart-sauce-labs-backpack']").click()
-    page.locator(".shopping_cart_link").click()
- 
-    assert "cart" in page.url
- 
-    page.locator("[data-test='remove-sauce-labs-backpack']").click()
- 
-    expect(page.locator(".cart_item")).not_to_be_visible()
+def test_remove_item_from_inventory_page(page: Page):
+    """Item can be removed from the cart directly on the inventory page."""
+    login_page = LoginPage(page)
+    cart_page = CartPage(page)
+
+    login_page.goto()
+    login_page.login("standard_user", "secret_sauce")
+
+    cart_page.add_item_to_cart("sauce-labs-backpack")
+    expect(cart_page.cart_badge).to_have_text("1")
+
+    cart_page.remove_item_from_cart("sauce-labs-backpack")
+
+    expect(cart_page.cart_badge).not_to_be_visible()

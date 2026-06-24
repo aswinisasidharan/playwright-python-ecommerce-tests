@@ -1,40 +1,39 @@
-
-import re
 import pytest
 from playwright.sync_api import Page, expect
+from pages.login_page import LoginPage
+from pages.cart_page import CartPage
+from pages.checkout_page import CheckoutPage
 
 
 def test_complete_checkout_flow(page: Page):
     """User can complete the full checkout flow end to end."""
-    page.goto("https://www.saucedemo.com/")
-    page.get_by_placeholder("Username").fill("standard_user")
-    page.get_by_placeholder("Password").fill("secret_sauce")
-    page.get_by_role("button", name="Login").click()
- 
-    # Add item to cart
-    page.locator("[data-test='add-to-cart-sauce-labs-backpack']").click()
- 
-    # Go to cart
-    page.locator(".shopping_cart_link").click()
-    assert "cart" in page.url
- 
+    login_page = LoginPage(page)
+    cart_page = CartPage(page)
+    checkout_page = CheckoutPage(page)
+
+    # Login
+    login_page.goto()
+    login_page.login("standard_user", "secret_sauce")
+
+    # Add item and go to cart
+    cart_page.add_item_to_cart("sauce-labs-backpack")
+    cart_page.go_to_cart()
+
     # Start checkout
-    page.locator("[data-test='checkout']").click()
-    assert "checkout-step-one" in page.url
- 
-    # Fill in details
-    page.locator("[data-test='firstName']").fill("Aswini")
-    page.locator("[data-test='lastName']").fill("Sasidharan")
-    page.locator("[data-test='postalCode']").fill("50667")
-    page.locator("[data-test='continue']").click()
- 
+    checkout_page.start_checkout()
+    assert checkout_page.is_on_step_one()
+
+    # Fill in details and continue
+    checkout_page.fill_details("Aswini", "Sasidharan", "50667")
+    checkout_page.continue_checkout()
+
     # Confirm overview page
-    assert "checkout-step-two" in page.url
+    assert checkout_page.is_on_step_two()
     expect(page.locator(".title")).to_have_text("Checkout: Overview")
- 
+
     # Finish the order
-    page.locator("[data-test='finish']").click()
- 
-    # Confirm order success
-    assert "checkout-complete" in page.url
-    expect(page.locator(".complete-header")).to_have_text("Thank you for your order!")
+    checkout_page.finish_checkout()
+
+    # Confirm success
+    assert checkout_page.is_complete()
+    expect(checkout_page.success_header).to_have_text("Thank you for your order!")

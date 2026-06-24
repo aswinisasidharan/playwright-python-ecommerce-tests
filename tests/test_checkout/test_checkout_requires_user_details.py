@@ -1,21 +1,28 @@
-import re
 import pytest
 from playwright.sync_api import Page, expect
+from pages.login_page import LoginPage
+from pages.cart_page import CartPage
+from pages.checkout_page import CheckoutPage
 
 
 def test_checkout_requires_user_details(page: Page):
     """Checkout cannot proceed without filling in user details."""
-    page.goto("https://www.saucedemo.com/")
-    page.get_by_placeholder("Username").fill("standard_user")
-    page.get_by_placeholder("Password").fill("secret_sauce")
-    page.get_by_role("button", name="Login").click()
- 
-    page.locator("[data-test='add-to-cart-sauce-labs-backpack']").click()
-    page.locator(".shopping_cart_link").click()
-    page.locator("[data-test='checkout']").click()
- 
-    assert "checkout-step-one" in page.url
- 
-    page.locator("[data-test='continue']").click()
- 
-    expect(page.locator("[data-test='error']")).to_contain_text("First Name is required")
+    login_page = LoginPage(page)
+    cart_page = CartPage(page)
+    checkout_page = CheckoutPage(page)
+
+    # Login
+    login_page.goto()
+    login_page.login("standard_user", "secret_sauce")
+
+    # Add item and go to checkout
+    cart_page.add_item_to_cart("sauce-labs-backpack")
+    cart_page.go_to_cart()
+    checkout_page.start_checkout()
+
+    assert checkout_page.is_on_step_one()
+
+    # Try to continue without filling details
+    checkout_page.continue_checkout()
+
+    expect(checkout_page.error_message).to_contain_text("First Name is required")
