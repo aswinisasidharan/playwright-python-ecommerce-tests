@@ -7,8 +7,6 @@ class LoginPage:
     All locators and actions related to login live here.
     """
 
-    URL = "https://www.saucedemo.com/"
-
     def __init__(self, page: Page, base_url: str):
         self.page = page
         self.base_url = base_url
@@ -19,7 +17,7 @@ class LoginPage:
         self.error_message = page.locator("[data-test='error']")
 
     def goto(self):
-        self.page.goto(self.URL)
+        self.page.goto(self.base_url)
 
     def login(self, username: str, password: str):
         self.username_input.fill(username)
