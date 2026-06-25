@@ -51,40 +51,11 @@ pytest tests/ --browser chromium --html=report.html -v
 ```
 
 ## Project Structure
-playwright-python-ecommerce-tests/
 
-├── .github/
-
-│   └── workflows/
-
-│       └── playwright.yml       ← CI pipeline
-
-├── api/
-
-│   └── clients/
-
-│       └── booking_client.py    ← API client class
-
-├── pages/                       ← POM classes (UI only)
-
-│   ├── login_page.py
-
-│   ├── cart_page.py
-
-│   └── checkout_page.py
-
-├── tests/
-
-│   ├── ui/
-
-│   │   ├── test_login.py
-
-│   │   ├── test_cart.py
-
-│   │   └── test_checkout.py
-
-│   └── api/
-
-│       └── test_api_bookings.py
-
-├── conftest.py
+- `pages/` — Page Object Model classes (UI)
+- `api/clients/` — API client classes
+- `tests/ui/` — UI tests (Playwright)
+- `tests/api/` — API tests (requests)
+- `conftest.py` — shared pytest fixtures
+- `pytest.ini` — pytest configuration
+- `requirements.txt` — project dependencies
