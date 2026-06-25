@@ -2,22 +2,37 @@
 
 # Playwright Python E-commerce Tests
 
-Automation test framework built with Playwright and Python using pytest.
+End-to-end UI and API test automation framework built with **Playwright** 
+and **Python**, following the Page Object Model design pattern with 
+GitHub Actions CI.
 
 ## Tech Stack
 - Python 3.9+
-- Playwright
-- pytest
-- pytest-html
+- Playwright (pytest-playwright)
+- pytest + pytest-html
+- requests (API testing)
+- GitHub Actions (CI/CD)
 
 ## Test Coverage
-- Login validation (3 tests)
-- Cart — add and remove items (4 tests)
-- Checkout flow (2 tests)
+| Folder | File | Tests | What it covers |
+|--------|------|-------|----------------|
+| ui | test_login.py | 3 | Login validation |
+| ui | test_cart.py | 4 | Add and remove items |
+| ui | test_checkout.py | 2 | Checkout flow |
+| api | test_api_bookings.py | 3 | Booking API — GET, POST |
 
 ## How to Run
 
 ```bash
+# Clone the repo
+git clone https://github.com/aswinisasidharan/playwright-python-ecommerce-tests.git
+cd playwright-python-ecommerce-tests
+
+# Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate     # Mac/Linux
+venv\Scripts\activate        # Windows
+
 # Install dependencies
 pip install -r requirements.txt
 playwright install
@@ -25,14 +40,51 @@ playwright install
 # Run all tests
 pytest tests/ --browser chromium -v
 
+# Run UI tests only
+pytest tests/ui/ --browser chromium -v
+
+# Run API tests only
+pytest tests/api/ -v
+
 # Run with HTML report
 pytest tests/ --browser chromium --html=report.html -v
 ```
 
 ## Project Structure
-```
-tests/
-├── test_login.py
-├── test_cart.py
-└── test_checkout.py
-```
+playwright-python-ecommerce-tests/
+
+├── .github/
+
+│   └── workflows/
+
+│       └── playwright.yml       ← CI pipeline
+
+├── api/
+
+│   └── clients/
+
+│       └── booking_client.py    ← API client class
+
+├── pages/                       ← POM classes (UI only)
+
+│   ├── login_page.py
+
+│   ├── cart_page.py
+
+│   └── checkout_page.py
+
+├── tests/
+
+│   ├── ui/
+
+│   │   ├── test_login.py
+
+│   │   ├── test_cart.py
+
+│   │   └── test_checkout.py
+
+│   └── api/
+
+│       └── test_api_bookings.py
+
+├── conftest.py
