@@ -1,4 +1,4 @@
-![Playwright Tests](https://github.com/aswinisasidharan/playwright-python-ecommerce-tests/actions/workflows/playwright.yml/badge.svg)
+[![Playwright Tests](https://github.com/aswinisasidharan/playwright-python-ecommerce-tests/actions/workflows/playwright.yml/badge.svg)](https://github.com/aswinisasidharan/playwright-python-ecommerce-tests/actions/workflows/playwright.yml)
 
 # Playwright Python E-commerce Tests
 
