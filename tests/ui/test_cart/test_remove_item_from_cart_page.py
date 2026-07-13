@@ -4,6 +4,9 @@ from pages.login_page import LoginPage
 from pages.cart_page import CartPage
 
 
+@pytest.mark.sanity
+@pytest.mark.regression
+@pytest.mark.cart
 def test_remove_item_from_inventory_page(page: Page, base_url: str):
     """Item can be removed from the cart directly on the inventory page."""
     login_page = LoginPage(page, base_url)
