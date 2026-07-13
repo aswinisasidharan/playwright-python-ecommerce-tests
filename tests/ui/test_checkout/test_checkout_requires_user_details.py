@@ -5,6 +5,8 @@ from pages.cart_page import CartPage
 from pages.checkout_page import CheckoutPage
 
 
+@pytest.mark.smoke
+@pytest.mark.checkout
 def test_checkout_requires_user_details(page: Page, base_url: str):
     """Checkout cannot proceed without filling in user details."""
     login_page = LoginPage(page, base_url)

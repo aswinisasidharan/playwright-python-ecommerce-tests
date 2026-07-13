@@ -3,6 +3,8 @@ from playwright.sync_api import Page, expect
 from pages.login_page import LoginPage
 
 
+@pytest.mark.regression
+@pytest.mark.login
 def test_empty_credentials_shows_error(page: Page, base_url: str):
     """Submitting empty credentials shows a validation error."""
     login_page = LoginPage(page, base_url)

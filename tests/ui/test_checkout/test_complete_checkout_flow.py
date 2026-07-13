@@ -5,6 +5,8 @@ from pages.cart_page import CartPage
 from pages.checkout_page import CheckoutPage
 
 
+@pytest.mark.regression
+@pytest.mark.checkout
 def test_complete_checkout_flow(page: Page, base_url: str):
     """User can complete the full checkout flow end to end."""
     login_page = LoginPage(page, base_url)
